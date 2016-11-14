@@ -29,4 +29,6 @@ public class AccountOperation {
 	private String account;
 	
 	private String tag;
+	
+	private String hash;
 }

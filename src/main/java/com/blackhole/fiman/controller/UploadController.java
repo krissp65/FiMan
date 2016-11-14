@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.BufferUnderflowException;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -43,14 +44,16 @@ public class UploadController {
 			
 			List<AccountOperation> operations = null;
 			try {
-				reader = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"));
+				reader = new BufferedReader(new InputStreamReader(file.getInputStream(), "ISO-8859-1"));
 
 				operations = csvService.parseCsv(reader);
+				
+				
 				operationRepository.save(operations);
 				
 				redirectAttributes.addFlashAttribute("flashMessage", "Import processed successfully for file: " + file.getOriginalFilename());
 
-			} catch (IOException | ParseException e) {
+			} catch (IOException | ParseException | NoSuchAlgorithmException e) {
 				redirectAttributes.addFlashAttribute("flashMessage", "Error on importing file '" + file.getOriginalFilename() + "' [" + e.getLocalizedMessage() + "].");
 			}
 			

@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class FiManApplicationTests {
 	}
 	
 	@Test
-	public void parseCsvTest() throws IOException, ParseException {
+	public void parseCsvTest() throws IOException, ParseException, NoSuchAlgorithmException {
 		List<AccountOperation> parsed = csvService.parseCsv(reader);
 		
 		assertNotNull(parsed);

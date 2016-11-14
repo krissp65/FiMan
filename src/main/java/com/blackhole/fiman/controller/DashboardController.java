@@ -66,7 +66,7 @@ public class DashboardController {
 
 		int pageNumber = (iStart/iLength);
 
-		Sort.Direction sort_dir = orderDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : orderDir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+		Sort.Direction sort_dir = orderDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : orderDir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.DESC;
 		String sort_column = getSortColumn(iOrderColumn);
 
 		Page<AccountOperation> operations = null;
