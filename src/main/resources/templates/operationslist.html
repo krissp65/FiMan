@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/head :: head('Operations')">
+</head>
+<body>
+    <header th:replace="fragments/nav :: nav"></header>
+
+    <div class="page-content">
+        <div class="container" style="margin-top: 50px;">
+
+            <div th:if="${#authorization.expression('isAuthenticated()')}">
+                <div class="row">
+                    <div th:if="${flashMessage}">
+                        <h2 th:text="${flashMessage}" />
+                    </div>
+                    <h1>Import</h1>
+                    <form method="POST" enctype="multipart/form-data" action="/operations/upload">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="hidden" th:name="iban" th:value="${iban}"/>
+                        <table class="table table-hover table-bordered">
+                            <tr>
+                                <td>File to import:</td>
+                                <td><input type="file" name="file" /></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input class="btn btn-primary" type="submit" value="Import"/></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="row">
+                    <h1>Accounts operations</h1>
+                    <hr class="separator" />
+                    <table id="account-table" class="table table-hover table-bordered" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Tag</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <script type="text/javascript" th:inline="javascript">
+                $(document)
+                    .ready(
+                        function() {
+
+                            var oTable = $('#account-table')
+                                .DataTable(
+                                    {
+                                        "processing" : true,
+                                        "serverSide" : true,
+                                        "ajax" : "/operations.data",
+                                        "deferRender" : true,
+                                        "columns" : [ {
+                                            "data" : "id"
+                                        }, {
+                                            "data" : "operationDate"
+                                        }, {
+                                            "data" : "description"
+                                        }, {
+                                            "data" : "tag"
+                                        }, {
+                                            "data" : "operationAmount"
+                                        }, ],
+                                        "columnDefs" : [ {
+                                            "targets" : [ 0 ],
+                                            "visible" : false,
+                                            "searchable" : false,
+                                        }, ],
+                                        "language" : {
+                                            "sEmptyTable" : "Keine Daten in der Tabelle vorhanden",
+                                            "sInfo" : "_START_ bis _END_ von _TOTAL_ Einträgen",
+                                            "sInfoEmpty" : "0 bis 0 von 0 Einträgen",
+                                            "sInfoFiltered" : "(gefiltert von _MAX_ Einträgen)",
+                                            "sInfoPostFix" : "",
+                                            "sInfoThousands" : ".",
+                                            "sLengthMenu" : "_MENU_ Einträge anzeigen",
+                                            "sLoadingRecords" : "Wird geladen...",
+                                            "sProcessing" : "Bitte warten...",
+                                            "sSearch" : "Suchen",
+                                            "sZeroRecords" : "Keine Einträge vorhanden.",
+                                            "oPaginate" : {
+                                                "sFirst" : "Erste",
+                                                "sPrevious" : "Zurück",
+                                                "sNext" : "Nächste",
+                                                "sLast" : "Letzte"
+                                            },
+                                            "oAria" : {
+                                                "sSortAscending" : ": aktivieren, um Spalte aufsteigend zu sortieren",
+                                                "sSortDescending" : ": aktivieren, um Spalte absteigend zu sortieren"
+                                            }
+                                        }
+                                    });
+
+                    $("#account-table tbody tr").click(function() {
+                        $tds = $(this).find("td");
+                        var iban = $tds.get(1).innerHTML;
+                    });
+
+                    function rowClicked(iban) {
+                        location.href = "/operations/" + iban;
+                    };
+                });
+        </script>
+
+        </div>
+    </div>
+    <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

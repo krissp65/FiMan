@@ -1,0 +1,36 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> 
+                <span class="icon-bar"></span> 
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><img style="margin-top: -10px" th:src="@{/res/images/cash_40.png}"
+                alt="" /></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <div th:if="${#authorization.expression('isAuthenticated()')}">
+                <form class="navbar-form navbar-right" th:action="@{/logout}" method="post">
+                    <span style="color: #ffffff; margin-top: 15px; margin-right: 10px;" th:text="${#authentication.principal}"></span>
+                    <button type="submit" class="btn btn-success">Logout</button>
+                </form>
+            </div>
+            <div th:unless="${#authorization.expression('isAuthenticated()')}">
+                <form class="navbar-form navbar-right" th:action="@{/dashboard}" method="post">
+                    <div class="form-group">
+                        <input type="text" placeholder="Username" name="username" class="form-control"
+                            autofocus="autofocus"></input>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" name="password" class="form-control"></input>
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                </form>
+            </div>
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</nav>

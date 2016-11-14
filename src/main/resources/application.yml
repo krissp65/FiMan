@@ -1,0 +1,12 @@
+logging:
+  level:
+    com.blackhole.fiman: DEBUG
+    
+spring:
+  data:
+    mongodb:
+      database: fiman
+      
+info:
+  build:
+    version: 0.0.1         
