@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.blackhole.fiman.documents.AccountOperation;
 import com.blackhole.fiman.documents.AccountOperationRepository;
+import com.blackhole.fiman.filters.DuplicateSearchFilter;
 import com.blackhole.fiman.services.CsvService;
 
 @Controller
@@ -48,6 +49,9 @@ public class UploadController {
 
 				operations = csvService.parseCsv(reader);
 				
+				DuplicateSearchFilter dsf = new DuplicateSearchFilter(operationRepository);
+				
+				operations = dsf.filter(operations);
 				
 				operationRepository.save(operations);
 				

@@ -57,7 +57,7 @@ public class CsvService {
 		String toBeHashed = op.getAccount() + op.getDescription() + sdf.format(op.getOperationDate())
 				+ Float.toString(op.getOperationAmount());
 		
-		MessageDigest md = MessageDigest.getInstance("SHA256");
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		byte[] buffer = toBeHashed.getBytes("ISO-8859-1");
 		md.update(buffer);
 		byte[] digest = md.digest();

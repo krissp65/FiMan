@@ -8,4 +8,5 @@ public interface ProcessingFilter {
 	
 	public List<AccountOperation> filter(List<AccountOperation> operations);
 	
+	
 }
